@@ -1,5 +1,4 @@
--- Install Packer automatically if it's not installed(Bootstraping)
--- Hint: string concatenation is done by `..`
+
 local ensure_packer = function()
     local fn = vim.fn
     local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
@@ -44,7 +43,8 @@ return require('packer').startup(function(use)
         use { 'hrsh7th/cmp-cmdline', after = 'nvim-cmp' } -- cmdline auto-completion
         use 'L3MON4D3/LuaSnip'
         use 'saadparwaiz1/cmp_luasnip'
-
+        use { 'nvim-lualine/lualine.nvim', require = {'nvim-tree/nvim-web-devicons', opt = true}}
+        use {'akinsho/bufferline.nvim', tag = "*", requires = 'nvim-tree/nvim-web-devicons'}
         ---------------------------------------
         -- NOTE: PUT YOUR THIRD PLUGIN HERE --
         ---------------------------------------

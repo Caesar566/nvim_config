@@ -1,33 +1,6 @@
-require('options')
-require('plugins')
-require('colorscheme')
-require('keymaps')
-require('config.nvim-cmp')
-require('lsp')
-
-require('bufferline').setup({
-  options = {
-    mode = 'buffers',
-    offsets = {
-      {filetype = 'NvimTree'}
-    },
-  },
-  highlights = {
-    buffer_selected = {
-      italic = false
-    },
-    indicator_selected = {
-      fg = {attribute = 'fg', highlight = 'Function'},
-      italic = false
-    }
-  }
-})
-
-require('lualine').setup()
 -- Eviline config for lualine
 -- Author: shadmansaleh
 -- Credit: glepnir
-local lualine = require('lualine')
 
 -- Color table for highlights
 -- stylua: ignore
@@ -165,7 +138,7 @@ ins_left { 'progress', color = { fg = colors.fg, gui = 'bold' } }
 ins_left {
   'diagnostics',
   sources = { 'nvim_diagnostic' },
-  symbols = { error = ' ', warn = ' ', info = '' },
+  symbols = { error = ' ', warn = ' ', info = ' ' },
   diagnostics_color = {
     color_error = { fg = colors.red },
     color_warn = { fg = colors.yellow },
@@ -213,7 +186,7 @@ ins_right {
 ins_right {
   'fileformat',
   fmt = string.upper,
-  icons_enabled = true, -- I think icons are cool but Eviline doesn't have them. sigh
+  icons_enabled = false, -- I think icons are cool but Eviline doesn't have them. sigh
   color = { fg = colors.green, gui = 'bold' },
 }
 
@@ -226,7 +199,7 @@ ins_right {
 ins_right {
   'diff',
   -- Is it me or the symbol for modified us really weird
-  symbols = { added = ' ', modified = '', removed = ' ' },
+  symbols = { added = ' ', modified = '󰝤 ', removed = ' ' },
   diff_color = {
     added = { fg = colors.green },
     modified = { fg = colors.orange },
@@ -244,24 +217,3 @@ ins_right {
 }
 
 -- Now don't forget to initialize lualine
-lualine.setup(config)
-
-require('nvim-tree').setup({
-  hijack_cursor = false,
-  on_attach = function(bufnr)
-    local bufmap = function(lhs, rhs, desc)
-      vim.keymap.set('n', lhs, rhs, {buffer = bufnr, desc = desc})
-    end
-
-    -- See :help nvim-tree.api
-    local api = require('nvim-tree.api')
-
-    bufmap('<CR>', api.node.open.edit, 'Expand folder or go to file')
-    bufmap('H', api.node.navigate.parent_close, 'Close parent folder')
-    bufmap('<C-a>', api.marks.bulk.move,'')
-    bufmap('gh', api.tree.toggle_hidden_filter, 'Toggle hidden files')
-  end
-})
-
-vim.keymap.set('n', '<C-f>', '<cmd>NvimTreeToggle<cr>')
-
